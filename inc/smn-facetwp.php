@@ -2,6 +2,17 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+function fwp_wrapper_open() {
+  if ( ! is_singular() ) : echo '<div class="facetwp-template"><div class="facetwp-template__inner">'; endif;
+}
+function fwp_wrapper_close() {
+  if ( ! is_singular() ) : echo '</div></div><!-- end facetwp-template -->'; endif;
+}
+add_action( 'woocommerce_before_shop_loop', 'fwp_wrapper_open', 5 );
+add_action( 'woocommerce_after_shop_loop', 'fwp_wrapper_close', 15 );
+add_action( 'woocommerce_no_products_found', 'fwp_wrapper_open', 5 );
+add_action( 'woocommerce_no_products_found', 'fwp_wrapper_close', 15 );
+
 function fwp_add_facet_labels() {
     if ( !function_exists( 'facetwp_display' ) ) return false;
   ?>
@@ -89,3 +100,66 @@ add_action( 'wp_head', function() {
       </script>
     <?php
   }, 100 );
+
+add_filter( 'facetwp_assets', function( $assets ) {
+    FWP()->display->json['expand'] = '<span class="facetwp-expand-icon-expand">+</span>';
+    FWP()->display->json['collapse'] = '<span class="facetwp-expand-icon-collapse">-</span>';
+
+    // Return the same thing (since we're hijacking this hook)
+    return $assets;
+});
+
+add_action( 'facetwp_scripts', function() {
+  ?>
+    <script>
+      (function($) {
+   
+        // On start of the facet refresh, but not on first page load
+        $(document).on('facetwp-refresh', function() {
+          if ( FWP.loaded ) {
+            $('.facetwp-template').prepend('<div class="spinner d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+            $('.facetwp-template').addClass('facetwp-loading');
+          }
+        });
+   
+        // On finishing the facet refresh
+        $(document).on('facetwp-loaded', function() {
+          $('.facetwp-template .spinner').remove();
+          $('.facetwp-template').removeClass('facetwp-loading');
+        });
+        
+      })(jQuery);
+    </script>
+  <?php
+}, 100 );
+
+// output only sub categories of current woocommerce product category
+add_filter( 'facetwp_facet_render_args', function( $args ) {
+
+  if ( 'product_cat' == $args['facet']['name'] && is_product_category() ) {  // replace 'my_facet_name' with the name of your facet
+
+      $current_term = get_queried_object_id();
+
+      // $args['facet']['parent_term'] = $current_term;
+
+      foreach ( $args['values'] as $key => $row ) {
+          /* to also include current term in chocies add this to if:
+             && $row['term_id'] != $current_term
+          */
+          if ( $row['parent_id'] != $current_term ) {
+              // unset( $args['values'][$key] );
+          }
+      }
+
+      $args['values'] = array_values( $args['values'] ); // fixes indexes
+
+      // if ( current_user_can( 'manage_options' ) ) :
+      //   echo '<pre>';
+      //     print_r ( $args );
+      //   echo '</pre>';
+      // endif;
+    
+    }
+
+  return $args;
+});

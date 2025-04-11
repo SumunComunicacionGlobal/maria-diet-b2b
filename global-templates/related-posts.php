@@ -24,7 +24,7 @@ if ( $posts_ids ) {
 
 	if ( $q->have_posts() ) { ?>
 
-		<div class="slick-carousel related-posts">
+		<div class="slick-carousel slick-padded related-posts">
 
 			<?php while ( $q->have_posts() ) { $q->the_post();
 

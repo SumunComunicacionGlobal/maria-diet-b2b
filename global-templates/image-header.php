@@ -3,6 +3,13 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+// check if woocommerce is active
+if ( class_exists( 'WooCommerce' ) ) {
+	if ( is_woocommerce() ) {
+		return false;
+	}
+}
+
 $image_id = false;
 $title = '';
 $description = '';

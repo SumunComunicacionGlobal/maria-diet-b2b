@@ -1,7 +1,12 @@
+.widget-title {
+	font-weight: $font-weight-bold;
+	font-size: $font-size-sm;
+}
+
 .widget-area {
 
 	.widget {
-        margin-bottom: $spacer * 2;
+        margin-bottom: $spacer;
 	}
 }
 
@@ -15,4 +20,52 @@
 	.footer-widget p {
 		margin-bottom: 0;
 	}
+}
+
+.widget_nav_menu {
+
+	ul.menu {
+		@extend .list-group;
+		@extend .list-group-flush;
+
+		> li {
+			@extend .list-group-item;
+
+			> a {
+				display: block;
+				font-size: $font-size-sm;
+				position: relative;
+
+				&:after {
+					content: "";
+					background-image: url("../img/flecha-derecha.svg");
+					background-size: contain;
+					background-repeat: no-repeat;
+					width: 1em;
+					height: 1em;
+					display: block;
+					position: absolute;
+					top: .25em;
+					right: .5em;
+					transition: $transition-base;
+				}
+
+				&:hover:after {
+					right: 0;
+				}
+			}
+		}
+	}
+}
+
+.wp-block-latest-posts__list,
+.wp-block-categories-list,
+.wp-block-archives-list {
+	@extend .list-group;
+	@extend .list-group-flush;
+
+	> li {
+		@extend .list-group-item;
+	}
+
 }

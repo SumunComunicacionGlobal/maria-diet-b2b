@@ -1,3 +1,8 @@
+iframe {
+	max-width: 100%;
+	border-radius: $border-radius;
+}
+
 .bg-cover { 
 	background-size: cover;
 	background-position: center center;
@@ -22,4 +27,8 @@ a {
 			opacity: .7;
 		}
 	}
+}
+
+.wp-block-video video {
+	border-radius: $border-radius;
 }

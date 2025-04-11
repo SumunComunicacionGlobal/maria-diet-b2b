@@ -34,17 +34,7 @@ $post_type = get_post_type();
 					get_template_part( 'global-templates/content-fragments', '', array('post_ids' => get_term_meta( get_queried_object_id(), 'top_fragments', true ) ) );
 				} ?>
 
-				<?php
-				if ( is_category() || is_tag() ) {
-
-					get_template_part( 'global-templates/filtro', 'blog' );
-
-				}
-
-				get_template_part( 'global-templates/subcategories' );
-				
-				?>
-
+				<?php get_template_part( 'global-templates/subcategories' ); ?>
 
 				<?php
 				if ( have_posts() ) {

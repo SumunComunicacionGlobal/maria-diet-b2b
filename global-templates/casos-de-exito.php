@@ -16,7 +16,7 @@ if ( $q->have_posts() ) { ?>
 
 	<div class="wrapper casos-de-exito-block" id="wrapper-casos-de-exito">
 
-		<div class="slick-carousel">
+		<div class="slick-carousel slick-padded">
 
 			<?php while ( $q->have_posts() ) { $q->the_post();
 

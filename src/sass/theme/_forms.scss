@@ -1,9 +1,17 @@
-.wpcf7 {
+label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $gray-700;
+}
+
+.wpcf7 form {
+    // width: 100%;
     max-width: 100% !important;
     
     label {
         font-size: $font-size-sm;
         width: 100%;
+        font-weight: $font-weight-semibold;
     }
 
     .wpcf7-list-item > label {
@@ -11,7 +19,14 @@
     }
     
     .wpcf7-response-output {
+        padding: $spacer;
         height: auto !important;
+        border-radius: $border-radius;
+        margin-left: 0;
+        margin-right: 0;
+        border-width: $border-width;
+        background-color: $white;
+        box-shadow: $box-shadow-sm;
     }
     
     .form-control-sm {
@@ -52,10 +67,7 @@
       }
 
       input[type=submit] {
-        @extend .btn;
-        @extend .btn-dark;
-        color: $white;
-        transition: $transition-base;
+        padding: $btn-padding-y 50px;
     
         &:disabled {
             background-color: $dark;
@@ -68,6 +80,13 @@
             opacity: .8;
             color: $white;
         }
+
+        + .wpcf7-spinner {
+          margin-right: 0;
+          margin-left: -30px;
+          top: 6px;
+        }
+      
       }    
 
       .wpcf7-form {
@@ -107,7 +126,12 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-}
+
+  input[type="search"] {
+    border-top-left-radius: $border-radius-pill;
+    border-bottom-left-radius: $border-radius-pill;
+  }
+ }
 
 .input-group-append {
   display: flex;
@@ -121,19 +145,12 @@
     z-index: 2;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border-top-right-radius: $border-radius-pill;
+    border-bottom-right-radius: $border-radius-pill;
+    font-size: $input-btn-font-size-sm;
 
     &:focus {
       z-index: 3;
     }
   }
-}
-
-.wpcf7-submit {
-
-  + .wpcf7-spinner {
-    margin-right: 0;
-    margin-left: -30px;
-    top: 6px;
-  }
-
 }

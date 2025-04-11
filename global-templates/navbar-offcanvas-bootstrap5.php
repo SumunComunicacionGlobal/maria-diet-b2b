@@ -13,58 +13,99 @@ $container = get_theme_mod( 'understrap_container_type' );
 $navbar_class = smn_get_navbar_class();
 ?>
 
-<nav id="main-nav" class="navbar navbar-expand-lg <?php echo $navbar_class; ?>" aria-labelledby="main-nav-label">
+<nav id="main-nav" class="" aria-labelledby="main-nav-label">
 
-	<h2 id="main-nav-label" class="screen-reader-text">
-		<?php esc_html_e( 'Main Navigation', 'understrap' ); ?>
-	</h2>
+	<div class="navbar navbar-header-first navbar-expand-lg <?php echo $navbar_class; ?>">
+
+		<p id="main-nav-label" class="screen-reader-text">
+			<?php esc_html_e( 'Main Navigation', 'understrap' ); ?>
+		</p>
 
 
-	<div class="<?php echo esc_attr( $container ); ?>">
+		<div class="<?php echo esc_attr( $container ); ?> gap-md-3">
 
-		<!-- Your site branding in the menu -->
-		<?php get_template_part( 'global-templates/navbar-branding' ); ?>
+			<!-- Your site branding in the menu -->
+			<?php get_template_part( 'global-templates/navbar-branding' ); ?>
 
-		<button
-			class="navbar-toggler"
-			type="button"
-			data-bs-toggle="offcanvas"
-			data-bs-target="#navbarNavOffcanvas"
-			aria-controls="navbarNavOffcanvas"
-			aria-expanded="false"
-			aria-label="<?php esc_attr_e( 'Open menu', 'understrap' ); ?>"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
+			<?php if ( is_user_logged_in() ) {
+				echo '<div class="d-none d-lg-block flex-grow-1 mw-500">';
+					get_product_search_form(); 
+				echo '</div>';
+			} ?>
 
-		<div class="offcanvas offcanvas-bottom bg-primary" tabindex="-1" id="navbarNavOffcanvas">
+			<div class="d-flex flex-wrap">
 
-			<div class="offcanvas-header justify-content-end">
+				<?php get_template_part( 'global-templates/navbar-woocommerce' ); ?>
+
 				<button
-					class="btn-close btn-close-white text-reset"
+					class="navbar-toggler"
 					type="button"
-					data-bs-dismiss="offcanvas"
-					aria-label="<?php esc_attr_e( 'Close menu', 'understrap' ); ?>"
-				></button>
-			</div><!-- .offcancas-header -->
+					data-bs-toggle="offcanvas"
+					data-bs-target="#navbarNavOffcanvas"
+					aria-controls="navbarNavOffcanvas"
+					aria-expanded="false"
+					aria-label="<?php esc_attr_e( 'Open menu', 'understrap' ); ?>"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-			<!-- The WordPress Menu goes here -->
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location'  => 'primary',
-					'container_class' => 'offcanvas-body',
-					'container_id'    => '',
-					'menu_class'      => 'navbar-nav justify-content-end flex-grow-1 pe-3',
-					'fallback_cb'     => '',
-					'menu_id'         => 'main-menu',
-					'depth'           => 2,
-					'walker'          => new Understrap_WP_Bootstrap_Navwalker(),
-				)
-			);
-			?>
-		</div><!-- .offcanvas -->
+			</div><!-- .d-flex -->
 
-	</div><!-- .container(-fluid) -->
+		</div><!-- .container(-fluid) -->
+
+	</div>
+
+	<div class="navbar navbar-header-second navbar-expand-lg <?php echo $navbar_class; ?>">
+
+		<div class="<?php echo esc_attr( $container ); ?>">
+
+			<div class="offcanvas offcanvas-start bg-light" tabindex="-1" id="navbarNavOffcanvas">
+
+				<div class="offcanvas-header align-items-start justify-content-between">
+
+					<?php get_template_part( 'global-templates/navbar-branding' ); ?>
+
+					<button
+							class="btn-close text-reset"
+							type="button"
+							data-bs-dismiss="offcanvas"
+							aria-label="<?php esc_attr_e( 'Close menu', 'understrap' ); ?>"
+					></button>
+
+				</div><!-- .offcancas-header -->
+
+				<div class="offcanvas-body">
+
+					<?php if ( is_user_logged_in() ) {
+						echo '<div class="d-lg-none mb-3">';
+
+							get_product_search_form(); 
+
+						echo '</div>';
+					} ?>
+
+					<!-- The WordPress Menu goes here -->
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location'  => 'primary',
+							'container_class' => 'w-100',
+							'container_id'    => '',
+							'menu_class'      => 'navbar-nav flex-grow-1',
+							'fallback_cb'     => '',
+							'menu_id'         => 'main-menu',
+							'depth'           => 2,
+							'walker'          => new Understrap_WP_Bootstrap_Navwalker(),
+						)
+					);
+					?>
+
+				</div>
+
+			</div><!-- .offcanvas -->
+
+		</div><!-- .container(-fluid) -->
+
+	</div>
 
 </nav><!-- #main-nav -->

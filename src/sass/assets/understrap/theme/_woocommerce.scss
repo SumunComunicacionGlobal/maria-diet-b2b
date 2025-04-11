@@ -102,9 +102,44 @@ figure.woocommerce-product-gallery__wrapper {
 #add_payment_method .cart-collaterals .cart_totals .discount td,
 .woocommerce-cart .cart-collaterals .cart_totals .discount td,
 .woocommerce-checkout .cart-collaterals .cart_totals .discount td {
-	color: $green;
+	color: $body-color;
+}
+.price {
+	font-weight: $font-weight-bold !important;
+
+	del {
+		font-size: $font-size-sm;
+		font-weight: $font-weight-base;
+		color: $text-muted;
+	}
+
+	&.pvp {
+		margin-top: -$paragraph-margin-bottom;
+		color: $text-muted !important;
+		font-size: $font-size-base !important;
+		font-weight: $font-weight-normal !important;
+	}
+
+	> * {
+		margin-right: .5em;
+	}
 }
 
 .woocommerce-page form .show-password-input {
 	top: initial;
+}
+
+.wrapper-products-carousel {
+	position: relative;
+
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+		border-bottom: $border-width solid $border-color;
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		position: absolute;
+		bottom: 0;
+	}
 }

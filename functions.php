@@ -8,12 +8,18 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+define( 'PEDIDO_MINIMO', 150 );
+define( 'DESCUENTO_5_CAJA_TERM_ID', 866 );
+define( 'NOVEDADES_PRODUCT_TAG_ID', 839 );
+define( 'COL_CLASSES', 'col-sm-6 col-lg-4 col-xl-3 mb-4' );
+define( 'CONTACT_ID', 1027 );
+
 // UnderStrap's includes directory.
 $understrap_inc_dir = 'inc';
 
 // Array of files to include.
 $understrap_includes = array(
-    '/smn-dummy-content.php',
+    // '/smn-dummy-content.php',
     '/smn-security.php',
     '/smn-seo.php',
     '/smn-widgets.php',
@@ -42,6 +48,11 @@ if ( class_exists('FacetWP') ) {
 if ( function_exists( 'gdpr_cookie_is_accepted' ) ) {
     $understrap_includes[] = '/smn-moove-gdpr-cookies.php';
 }
+
+if ( class_exists('COMPLIANZ') ) {
+	$understrap_includes[] = '/smn-complianz.php';
+}
+
 
 // Include files.
 foreach ( $understrap_includes as $file ) {

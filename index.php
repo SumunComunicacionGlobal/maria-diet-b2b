@@ -54,8 +54,6 @@ $container = get_theme_mod( 'understrap_container_type' );
 				<?php
 				if ( have_posts() ) {
 					// Start the Loop.
-					get_template_part( 'global-templates/filtro', 'blog' );
-
 					while ( have_posts() ) {
 						the_post();
 

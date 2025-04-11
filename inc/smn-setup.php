@@ -13,7 +13,7 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 1280; /* pixels */
 }
 
-add_action( 'after_setup_theme', 'smn_setup', 20 );
+// add_action( 'after_setup_theme', 'smn_setup', 20 );
 function smn_setup() {
 
 	register_nav_menus( array(
@@ -31,13 +31,13 @@ function understrap_all_excerpts_get_more_link( $post_excerpt ) {
 
         if ( is_search() ) return $post_excerpt;
 
-        $post_excerpt .= '<div class="wp-block-buttons">';
-            $post_excerpt .= '<div class="wp-block-button is-style-arrow-link">';
-                $post_excerpt .= '<a class="wp-block-button__link" href="' . esc_url( get_permalink( get_the_ID() ) ) . '">';
-                    $post_excerpt .= __( 'Read More...', 'understrap' );
-                $post_excerpt .= '</a>';
-            $post_excerpt .= '</div>';
-        $post_excerpt .= '</div>';
+        // $post_excerpt .= '<div class="wp-block-buttons">';
+        //     $post_excerpt .= '<div class="wp-block-button is-style-arrow-link">';
+        //         $post_excerpt .= '<a class="wp-block-button__link" href="' . esc_url( get_permalink( get_the_ID() ) ) . '">';
+        //             $post_excerpt .= __( 'Read More...', 'understrap' );
+        //         $post_excerpt .= '</a>';
+        //     $post_excerpt .= '</div>';
+        // $post_excerpt .= '</div>';
 
     }
 

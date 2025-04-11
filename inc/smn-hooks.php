@@ -36,7 +36,7 @@ function smn_wpcf7_form_control_class( $scanned_tag, $replace ) {
 add_action( 'loop_start', 'archive_loop_start', 10 );
 function archive_loop_start( $query ) {
 
-    if ( isset( $query->query['ignore_row'] ) && $query->query['ignore_row'] ) return false;
+    if ( is_woocommerce() || isset( $query->query['ignore_row'] ) && $query->query['ignore_row'] ) return false;
     
     if ( ( isset( $query->query['add_row'] ) && $query->query['add_row'] ) || ( is_archive() || is_home() || is_search() ) ) {
         echo '<div class="row">';
@@ -46,7 +46,7 @@ function archive_loop_start( $query ) {
 add_action( 'loop_end', 'archive_loop_end', 10 );
 function archive_loop_end( $query ) {
 
-    if ( isset( $query->query['ignore_row'] ) && $query->query['ignore_row'] ) return false;
+    if ( is_woocommerce() || isset( $query->query['ignore_row'] ) && $query->query['ignore_row'] ) return false;
 
     if ( ( isset( $query->query['add_row'] ) && $query->query['add_row'] ) || ( is_archive() || is_home() || is_search() ) ) {
         echo '</div>';
@@ -56,11 +56,23 @@ function archive_loop_end( $query ) {
 add_filter( 'body_class', 'smn_body_classes' );
 function smn_body_classes( $classes ) {
 
-    if ( is_singular() ) {
+    if ( is_page() ) {
+
         $navbar_bg = get_post_meta( get_the_ID(), 'navbar_bg', true );
         if ( 'transparent' == $navbar_bg ) {
             $classes[] = 'navbar-transparent';
         }
+
+        $cmplz_pages = array(
+            get_option('cmplz_privacy-statement_custom_page'),
+            get_option('cmplz_impressum_custom_page'),
+            get_option('cmplz_disclaimer_custom_page')
+        );
+
+        if (in_array(get_the_ID(), $cmplz_pages)) {
+            $classes[] = 'cmplz-document';
+        }
+
     } else {
 
     }
@@ -71,6 +83,9 @@ function smn_body_classes( $classes ) {
 
 add_filter( 'post_class', 'bootstrap_post_class', 10, 3 );
 function bootstrap_post_class( $classes, $class, $post_id ) {
+
+    if ( is_woocommerce() ) return $classes;
+
     if ( is_archive() || is_home() || is_search() || in_array( 'hfeed-post', $class ) ) {
         $classes[] = 'col-sm-6 col-lg-4 mb-5 stretch-linked-block'; 
     }
@@ -90,7 +105,7 @@ function top_anchor() {
 
 add_action( 'wp_footer', 'back_to_top' );
 function back_to_top() {
-    echo '<a href="#top" class="back-to-top"></a>';
+    echo '<a href="#top" class="btn btn-light back-to-top"></a>';
 }
 
 function es_blog() {
@@ -106,6 +121,19 @@ add_filter( 'theme_mod_understrap_sidebar_position', 'cargar_sidebar');
 function cargar_sidebar( $valor ) {
     if ( is_singular( 'post' ) ) {
         $valor = 'right';
+    } elseif ( is_woocommerce() && is_archive() ) {
+        
+        if ( is_product_category() ) {
+            $display_type = woocommerce_get_loop_display_mode();
+            if ( 'subcategories' == $display_type ) {
+                $valor = 'none';
+            } else {
+                $valor = 'left';
+            }
+        } else {
+            $valor = 'left';
+        }
+
     }
     return $valor;
 }
@@ -185,3 +213,133 @@ function smn_do_not_include_children_in_product_cat_archive( $query ) {
         $query->tax_query->queries[0]['include_children'] = 0;
     }
 }
+
+// add_action( 'wp_footer', 'smn_add_shop_offcanvas' );
+function smn_add_shop_offcanvas() {
+
+    if ( !is_user_logged_in() ) return;
+
+    $shop_page_id = wc_get_page_id( 'shop' );
+    $shop_page_url = get_permalink( $shop_page_id );
+
+    ?>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasShop" aria-labelledby="offcanvasShopLabel">
+        
+        <div class="offcanvas-header align-items-start justify-content-between">
+            <p class="h6 offcanvas-title" id="offcanvasShopLabel"><?php echo __( 'Catálogo', 'smn' ); ?></p>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+
+            <?php
+            
+            the_widget( 'WC_Widget_Product_Categories', array(
+                'title' => '',
+                'orderby' => 'order',
+                'dropdown' => false,
+                'count' => false,
+                'hierarchical' => true,
+                'show_children_only' => false,
+                'hide_empty' => true,
+                'depth' => 1,
+            ) );
+
+            ?>
+
+    </div>
+
+
+
+    <?php
+
+}
+
+add_action( 'wp_head', 'smn_dynamic_styles' );
+function smn_dynamic_styles() {
+
+    $product_cats = get_terms( array(
+        'taxonomy' => 'product_cat',
+        'meta_query' => array(
+            array(
+                'key' => 'icon_id',
+                'compare' => 'EXISTS',
+            ),
+        ),
+    ) );
+    ?>
+
+    <style type="text/css">
+        <?php foreach( $product_cats as $cat ) : 
+            $img_id = get_field( 'icon_id', $cat );
+            $img_url = wp_get_attachment_image_url( $img_id, 'medium' );
+            ?>
+
+            .cat-item-<?php echo $cat->term_id; ?> > a {
+                background-image: url(<?php echo $img_url; ?>);
+            }
+
+        <?php endforeach; ?>
+    </style>
+
+    <?php
+}
+
+// Modificar enlace #productos si no estás logueado
+add_action( 'wp_footer', function() {
+    if ( is_user_logged_in() ) return;
+
+    $my_account_link = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+    ?>
+
+    <script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+                $('a[href$="#productos"]').each(function() {
+                    var $this = $(this);
+                    $this.attr( 'href', '<?php echo $my_account_link; ?>' );
+                });
+            });
+        })(jQuery);
+    </script>
+    <?php
+});
+
+add_filter( 'wp_nav_menu_objects', function( $items, $args ) {
+    if ( 'primary' === $args->theme_location ) {
+        foreach ( $items as $item ) {
+            if ( 'product_cat' === $item->object ) {
+                $term_id = $item->object_id;
+                $subcategories = get_terms( array(
+                    'taxonomy' => 'product_cat',
+                    'parent'   => $term_id,
+                    'hide_empty' => false,
+                    'orderby' => 'name',
+                ) );
+
+                if ( ! empty( $subcategories ) && ! is_wp_error( $subcategories ) ) {
+
+                    // Add "Ver todo" as the first item
+                    $view_all_item = clone $item;
+                    $view_all_item->ID = 'view-all-' . $term_id;
+                    $view_all_item->title = __( 'Ver todo', 'smn' );
+                    // $view_all_item->url = get_term_link( $term_id );
+                    $view_all_item->menu_item_parent = $item->ID;
+                    $view_all_item->classes[] = 'view-all';
+                    $items[] = $view_all_item;
+
+                    foreach ( $subcategories as $subcategory ) {
+                        $submenu_item = clone $item;
+                        $submenu_item->ID = 'subcat-' . $subcategory->term_id;
+                        $submenu_item->title = $subcategory->name;
+                        $submenu_item->url = get_term_link( $subcategory );
+                        $submenu_item->menu_item_parent = $item->ID;
+                        $items[] = $submenu_item;
+                    }
+                }
+            }
+        }
+    }
+    return $items;
+}, 10, 2 );

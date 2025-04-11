@@ -1,0 +1,8 @@
+.hfeed-post.type-post {
+    
+    .wp-post-image {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: $border-radius;
+    }
+}

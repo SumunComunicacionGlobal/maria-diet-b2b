@@ -206,5 +206,187 @@ function sumun_shortcode_casos_de_exito() {
 }
 add_shortcode( 'casos_de_exito', 'sumun_shortcode_casos_de_exito' );
 
+function smn_product_categories_tabs() {
+	ob_start();
+	get_template_part( 'global-templates/product-categories-tabs' );
+	$r = ob_get_clean();
+
+	return $r;
+}
+add_shortcode( 'categorias_principales', 'smn_product_categories_tabs' );
+
+function sumun_shortcode_ventajas( $atts ) {
+
+	extract( shortcode_atts( array(
+        'textos' => '',
+    ), $atts ) );
+
+	ob_start();
+	get_template_part( 'global-templates/ventajas', null, array('textos' => $textos) );
+	$r = ob_get_clean();
+
+	return $r;
+}
+add_shortcode( 'ventajas', 'sumun_shortcode_ventajas' );
+
 add_shortcode( 'breadcrumb', 'smn_get_breadcrumb' );
 add_shortcode( 'breadcrumbs', 'smn_get_breadcrumb' );
+
+function boton_desplegable_categorias( $atts ) {
+	extract( shortcode_atts( array(
+		'term_id' => '',
+	), $atts ) );
+
+	if ( empty( $term_id ) || !is_numeric( $term_id ) ) {
+		return;
+	}
+
+	$term = get_term( $term_id );
+	if ( is_wp_error( $term ) ) {
+		return;
+	}
+
+	$child_terms = get_terms( array(
+		'taxonomy' => $term->taxonomy,
+		'parent'   => $term_id,
+		'hide_empty' => false,
+	) );
+
+	if ( empty( $child_terms ) || is_wp_error( $child_terms ) ) {
+		return;
+	}
+	ob_start(); ?>
+
+	<div class="collapse" id="collapseSubcategories<?php echo $term_id; ?>" aria-labelledby="collapseMenuButton<?php echo $term_id; ?>">
+		<ul class="collapse-subcategories-list">
+			<?php foreach ( $child_terms as $child_term ) : ?>
+				<li><?php echo esc_html( $child_term->name ); ?></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+
+	<div class="text-end mt-3">
+		<a href="#collapseSubcategories<?php echo $term_id; ?>" class="btn btn-outline-light collapse-menu-button" id="collapseMenuButton<?php echo $term_id; ?>" role="button" data-bs-toggle="collapse" aria-expanded="false">
+			<?php echo __( 'Ver categorías', 'smn' ); ?>
+		</a>
+	</div>
+
+	<script>
+		jQuery(document).ready(function($) {
+
+			var collapseButton = $('#collapseMenuButton<?php echo $term_id; ?>');
+			var collapseElement = $(collapseButton.attr('href'));
+			var coverBackground = collapseButton.closest('.wp-block-cover');
+			const coverBackgroundClass = 'wp-block-cover-collapsed';
+
+			if (coverBackground.length) {
+
+				coverBackground.addClass(coverBackgroundClass);
+
+			}
+
+			collapseElement.on('show.bs.collapse', function() {
+				if (coverBackground.length) {
+					coverBackground.removeClass(coverBackgroundClass);
+				}
+			});
+
+			collapseElement.on('hide.bs.collapse', function() {
+				if (coverBackground.length) {
+					coverBackground.addClass(coverBackgroundClass);
+				}
+			});
+
+		});
+	</script>
+	<?php $output = ob_get_clean();
+
+	return $output;
+}
+add_shortcode( 'boton_desplegable_categorias', 'boton_desplegable_categorias' );
+
+function nombre_cliente_shortcode() {
+	$current_user = wp_get_current_user();
+	if ($current_user->exists() && !empty($current_user->display_name)) {
+		return $current_user->display_name;
+	} else {
+		return get_bloginfo('name');
+	}
+}
+add_shortcode('nombre_cliente', 'nombre_cliente_shortcode');
+
+function categorias_cliente_shortcode() {
+	$current_user = wp_get_current_user();
+	if (!$current_user->exists()) {
+		return '';
+	}
+
+	// No usar 'fields' => 'names' porque el plugin Hide Product Cats está interfiriendo en la consulta
+	$terms = get_terms(array(
+		'taxonomy'   => 'product_cat',
+		'parent'     => 0,
+		'hide_empty' => true,
+	));
+
+	if (empty($terms) || is_wp_error($terms)) {
+		return '';
+	}
+
+	$output_array = array();
+
+	foreach ($terms as $key => $term) {
+		$output_array[] = '<span>' . $term->name . '</span>';
+	}
+
+	$output = implode(' · ', $output_array);
+
+	return $output;
+}
+add_shortcode('categorias_cliente', 'categorias_cliente_shortcode');
+
+function marcas_shortcode( $atts ) {
+
+	extract( shortcode_atts( array(
+		'exclude' => '',
+	), $atts ) );
+
+	$args = array(
+		'taxonomy'   => 'product_brand',
+		'hide_empty' => false,
+	);
+
+	if ( $exclude ) {
+		$exclude = explode( ',', $exclude );
+		$args['exclude'] = $exclude;
+	}
+
+	$terms = get_terms( $args );
+
+	if (empty($terms) || is_wp_error($terms)) {
+		return '';
+	}
+
+	$output = '<div class="slick-marcas-carousel slick-padded">';
+
+	foreach ($terms as $term) {
+		$thumbnail_id = get_term_meta($term->term_id, 'thumbnail_id', true);
+		$term_link = get_term_link($term);
+
+		if (!is_wp_error($term_link)) {
+			// $output .= '<div class="col-6 col-md-3 mb-2 text-center">';
+			$output .= '<a href="' . esc_url($term_link) . '">';
+				if ( $thumbnail_id ) {
+					$output .= wp_get_attachment_image( $thumbnail_id, 'medium', false, array('class' => 'img-fluid') );
+				} else {
+					$output .= '<p class="h5 mt-2">' . esc_html($term->name) . '</p>';
+				}
+			$output .= '</a>';
+			// $output .= '</div>';
+		}
+	}
+
+	$output .= '</div>';
+
+	return $output;
+}
+add_shortcode('marcas', 'marcas_shortcode');

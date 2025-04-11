@@ -1,0 +1,74 @@
+.tinv-wraper.tinv-wishlist.tinvwl-above_thumb-add-to-cart {
+    left: unset;
+    right: 12px;
+}
+
+span.tinvwl-product-stats {
+    right: -1.2em;
+}
+
+.tinvwl-product-in-list.tinvwl-product-make-remove .tinvwl_remove_from_wishlist-text, 
+.tinvwl-product-in-list.tinvwl-product-make-remove .tinvwl_already_on_wishlist-text, 
+.tinvwl-product-in-list.tinvwl-product-make-remove img.icon-already-on-wishlist, 
+.tinvwl_add_to_wishlist_button.tinvwl-product-in-list .tinvwl_remove_from_wishlist-text, 
+.tinvwl_add_to_wishlist_button.tinvwl-product-in-list .tinvwl_already_on_wishlist-text, 
+.tinvwl_add_to_wishlist_button.tinvwl-product-in-list img.icon-already-on-wishlist {
+    font-size: $font-size-sm;
+}
+
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt, 
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt {
+    @extend .btn;
+    @extend .btn-outline-dark;
+}
+
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce table button.button.alt, 
+table button {
+    @extend .btn-sm;
+}
+
+.tinvwl-input-group .form-control {
+    height: unset;
+    @extend .form-select;
+}
+
+#tinvwl_product_actions {
+    min-width: 180px;
+    padding-right: 2rem;
+}
+
+.tinv-wishlist tfoot .tinvwl-to-left+.tinvwl-to-right {
+    margin-top: -8px;
+}
+
+@include media-breakpoint-down(xxl) {
+    .tinv-wishlist tfoot .tinvwl-to-left:not(:empty),
+    .tinv-wishlist tfoot .tinvwl-to-right {
+        width: 100%;
+        margin-top: 0 !important;
+    }
+}
+
+.wishlist-page-link {
+
+    &:before {
+        content: '\e909';
+        font-family: 'tinvwl-webfont';
+        font-size: 2rem;
+    }
+    
+}

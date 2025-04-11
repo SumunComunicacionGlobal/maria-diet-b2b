@@ -52,7 +52,8 @@ html {
     z-index: 1;
 }
 
-.pagination {
+.pagination,
+.woocommerce-pagination {
 	margin-top: $spacer * 2;
 	justify-content: center;
 }
@@ -65,24 +66,17 @@ html {
 	position: fixed;
 	right: $spacer;
 	bottom: -60px;
-	width: 60px;
-	height: 60px;
-	background-color: $primary;
-	border: 1px solid transparent;
-	color: $white;
+	width: $spacer * 2;
+	height: $spacer * 2;
+	padding: 0;
 	opacity: 0;
 	transition: $transition-base;
 	z-index: 10000;
 	transform: rotate(270deg);
-	background-image: url('../img/flecha-derecha-blanca.svg');
-	background-size: 30px auto;
+	background-image: url('../img/flecha-derecha.svg');
+	background-size: 20px auto;
 	background-position: center;
 	background-repeat: no-repeat;
-
-	&:hover {
-		background-color: darken($primary, 10);
-		border: 1px solid darken($primary, 10);
-	}
 }
 
 .scrolled .back-to-top {

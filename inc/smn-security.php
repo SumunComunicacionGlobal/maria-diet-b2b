@@ -14,7 +14,7 @@ class WPExplorer_Prevent_User_Enumeration {
 	 * Init.
 	 */
 	public static function init() {
-		add_filter( 'login_errors', [ self::class, 'modify_login_errors' ] );
+		// add_filter( 'login_errors', [ self::class, 'modify_login_errors' ] );
 		add_action( 'init', [ self::class, 'prevent_author_requests' ] );
 		add_action( 'rest_authentication_errors', [ self::class, 'only_allow_logged_in_rest_access_to_users' ] );
 		add_filter( 'wp_sitemaps_add_provider', [ self::class, 'remove_authors_from_sitemap' ], 10, 2 );

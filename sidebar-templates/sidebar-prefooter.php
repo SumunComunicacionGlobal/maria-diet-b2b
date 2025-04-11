@@ -10,16 +10,20 @@ if ( is_singular() ) {
 	if ( $ocultar_prefooter ) return false;
 }
 
-?>
+if ( !is_front_page(  ) ) {
+	get_template_part( 'global-templates/ventajas' );
+}
 
-<?php if ( is_active_sidebar( 'prefooter' ) ) : ?>
+// get_template_part( 'global-templates/footer-promos' );
+
+if ( is_active_sidebar( 'prefooter' ) ) : ?>
 
 	<div class="wrapper" id="wrapper-prefooter">
 
 		<div class="<?php echo esc_attr( $container ); ?>" id="prefooter-content" tabindex="-1">
 
 			<div class="row">
-
+	
 				<?php dynamic_sidebar( 'prefooter' ); ?>
 
 			</div>

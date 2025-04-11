@@ -1,3 +1,221 @@
+.main-nav-buttons {
+    gap: $spacer * .75;
+    margin-left: $spacer*.5;
+
+    .tinvwl_add_to_wishlist_button {
+        width: 2rem;
+        height: 2rem;
+
+        &:before {
+            font-size: 2rem !important;
+            margin-top: -15px !important;
+            margin-left: -15px !important;
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        // order: 1;
+    }
+}
+
 #main-nav {
     transition: $transition-base;
+
+    > .navbar {
+        border-bottom: $border-width solid $border-color;
+
+        @include media-breakpoint-down(lg) {
+
+            > .container {
+                max-width: unset;
+            }
+
+        }
+    }
+
+    .menu-item-object-product_cat > .nav-link {
+        font-weight: 600;
+    }
+
+    .view-all > .dropdown-item {
+        font-weight: 600;
+    }
+
+    @include media-breakpoint-down(lg) {
+
+        .navbar-header-second {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+    }
+
+    @include media-breakpoint-down(sm) {
+        .navbar-header-first .navbar-brand {
+            max-width: 140px;
+        }
+    }
+}
+
+.navbar-brand {
+
+    img,
+    svg {
+
+        // &.customer-logo {
+            height: 90px;
+            width: 260px;
+            object-fit: contain;
+            object-position: left center;
+        // }
+
+    }
+    
+}
+
+.shop-menu-item {
+
+    > .nav-link {
+        // @extend .btn;
+        // @extend .btn-sm;
+        // @extend .btn-primary;
+        // @extend .btn-light;
+        
+        padding: $nav-link-padding-y $btn-padding-x-sm;
+        text-transform: uppercase;
+
+        background-image: $navbar-light-toggler-icon-bg;
+        background-repeat: no-repeat;
+        background-position: left 1em center;
+        padding-left: 2.5em !important;
+        background-size: 1em;
+
+        &:after {
+            content: none;
+        }
+
+    }
+
+}
+
+@include media-breakpoint-up(lg) {
+    #main-menu {
+        
+        .shop-menu-item + .menu-item {
+            margin-left: auto;
+        }
+
+        > .menu-item:last-child > .nav-link {
+            padding-right: 0;
+        }
+    }
+
+}
+
+
+#navbarNavOffcanvas {
+
+    @include media-breakpoint-down(lg) {
+
+        #main-menu {
+
+            > .menu-item.shop-menu-item {
+                margin-bottom: $spacer;
+            }
+
+            > .menu-item:not(.shop-menu-item) {
+                border-bottom: $border-width solid $border-color;
+
+                > .nav-link {
+                    padding-top: .5em;
+                    padding-bottom: .5em;
+                } 
+            }
+        }
+
+    }
+
+}
+
+#offcanvasShop {
+    max-width: calc( #{$offcanvas-horizontal-width} - #{$spacer} );
+
+    .product-categories,
+    .children {
+
+        > li {
+
+            > a {
+                padding-left: 1.5em;
+                background-size: auto 1.2em;
+                background-repeat: no-repeat;
+                background-position: left center;
+                display: block;
+            }
+        }
+    }
+
+    .product-categories {
+        @extend .list-group;
+        @extend .list-group-flush;
+
+        > li {
+            @extend .list-group-item;
+
+            > a {
+                font-weight: $font-weight-semibold;
+            }
+        }
+    }
+
+    .children {
+        list-style: none;
+        display: none;
+        padding-top: $spacer * .5;
+        font-size: $font-size-sm;
+
+        > li > a {
+            padding-top: .1em;
+            padding-bottom: .1em;
+        }
+    }
+
+    .cat-item-all {
+        font-weight: $font-weight-semibold;
+        margin-bottom: .5em;
+    }
+
+}
+
+.main-nav-account-button {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: $border-width solid;
+    border-radius: $border-radius-pill;
+    transition: $btn-transition;
+
+    &:hover {
+        opacity: .5;
+    }
+
+    img {
+        width: 1rem;
+        height: 1rem;
+        object-fit: contain;
+        filter: brightness(0);
+    }
+
+    &.dropdown-toggle {
+        margin-right: .75rem;
+        
+        &:after {
+            position: absolute;
+            border-top-color: $dark;
+            right: 0;
+        }
+
+    }
 }

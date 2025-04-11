@@ -1,11 +1,13 @@
 .facetwp-facet {
     margin-bottom: $spacer !important;
+	font-size: $font-size-sm;
 }
 
-p.facet-label {
+p.facet-label,
+label.facet-label {
     margin-bottom: $spacer/2;
     font-size: $font-size-sm;
-    color: $gray-500;
+	font-weight: 500;
 }
 
 select.facetwp-dropdown {
@@ -21,7 +23,7 @@ select.facetwp-dropdown {
 }
 .facetwp-type-dropdown select,
 .facetwp-type-fselect .fs-label-wrap {
-    background-color: $secondary-10;
+    background-color: $light;
     color: $white;
 }
 
@@ -54,6 +56,49 @@ select.facetwp-dropdown {
 	}
 }
 
+.facetwp-checkbox {
+	background-image: none !important;
+	position: relative;
+
+	&:before {
+		content: "";
+		width: 14px;
+		height: 14px;
+		border: $border-width solid $gray-400;
+		border-radius: 4px;
+		display: block;
+		position: absolute;
+		left: 0;
+		top: .25em;
+	}
+
+	.facetwp-counter {
+		color: $text-muted;
+		font-size: .75em;
+	}
+
+	&.checked {
+
+		&:before {
+			border-color: $orange;
+			background-color: $orange;
+		}
+
+	}
+
+	.facetwp-expand {
+		display: block;
+		border: $border-width solid $border-color;
+		padding: 2px 4px;
+		border-radius: 4px;
+		line-height: .8;
+		min-width: 1rem;
+		text-align: center;
+		margin-left: 2px;
+	}
+
+}
+
 .flyout-row.name-limpiar_filtro {
 	
 	h3,
@@ -63,7 +108,67 @@ select.facetwp-dropdown {
 }
 
 .facetwp-flyout-close {
-	font-size: 20px;
-	text-transform: uppercase;
-	font-weight: $font-weight-bold;
+	@extend .btn-close;
+	margin-left: auto;
+	padding: $spacer !important;
+
+	&,
+	&:hover {
+		color: transparent;
+	}
+}
+
+.facetwp-reset {
+	@extend .btn;
+	@extend .btn-sm;
+	@extend .btn-outline-primary;
+}
+
+.facetwp-selections {
+
+	ul {
+		padding-left: 0;
+	}
+
+	li {
+
+		span {
+			display: inline-block;
+			font-size: $font-size-sm;
+			margin-bottom: 6px;
+		}
+
+	}
+
+	.facetwp-selection-label {
+		display: none;
+	}
+
+	.facetwp-selection-value {
+		padding: 4px 6px;
+		border-radius: $btn-border-radius-sm;
+		background-color: $gray-100;
+		// border: $border-width solid;
+		background-position: right 4px center !important;
+	}
+}
+
+.facetwp-template {
+	position: relative;
+
+	.facetwp-template__inner {
+		transition: opacity .3s;
+	}
+
+	&.facetwp-loading .facetwp-template__inner {
+		opacity: .3;
+	}
+
+	.spinner {
+		position: absolute;
+		top: min(50%, 200px);
+		left: 0;
+		right: 0;
+	}
+
 }

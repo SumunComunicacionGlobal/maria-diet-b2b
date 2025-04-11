@@ -1,0 +1,46 @@
+.thmaf-thslider-viewport li.thmaf-thslider-item, 
+.thmaf-thslider-viewport li.thmaf-thslider-item_c {
+    width: 260px;
+}
+
+.thmaf-adr-box.address-box {
+    border: $card-border-width solid $card-border-color;
+    box-shadow: $card-box-shadow;
+    border-radius: $card-border-radius;
+    font-size: $font-size-sm;
+
+    &:hover {
+        box-shadow: none;
+    }
+
+    .thmaf-main-content .address-wrapper,
+    .thmaf-acnt-adr-footer.acnt-address-footer {
+        padding: $card-spacer-y $card-spacer-x;
+        height: unset;
+    }
+
+    .btn-continue.address-wrapper {
+        height: auto;
+    }
+
+    button {
+        @extend .btn;
+        @extend .btn-sm;
+    }
+
+    .btn-continue {
+
+        button {
+            @extend .btn-primary;
+        }
+
+    }
+
+    .acnt-address-footer {
+
+        button {
+            @extend .btn-outline-danger;
+        }
+    }
+    
+}

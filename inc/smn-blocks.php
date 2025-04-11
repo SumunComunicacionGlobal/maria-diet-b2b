@@ -16,10 +16,28 @@ if ( function_exists( 'register_block_style' ) ) {
     );
     
     register_block_style(
+        'core/cover',
+        array(
+            'name'         => 'card-cover',
+            'label'        => __( 'Card', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+    
+    register_block_style(
+        'core/button',
+        array(
+            'name'         => 'arrow-btn',
+            'label'        => __( 'Botón flecha', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
         'core/button',
         array(
             'name'         => 'arrow-link',
-            'label'        => __( 'Con flecha', 'smn-admin' ),
+            'label'        => __( 'Link flecha', 'smn-admin' ),
             'is_default'   => false,
         )
     );
@@ -29,6 +47,51 @@ if ( function_exists( 'register_block_style' ) ) {
         array(
             'name'         => 'gapless',
             'label'        => __( 'Sin espacio', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
+        'core/columns',
+        array(
+            'name'         => 'cards-columns',
+            'label'        => __( 'Cards', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
+        'core/group',
+        array(
+            'name'         => 'cards-group',
+            'label'        => __( 'Cards', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
+        'core/group',
+        array(
+            'name'         => 'card-group',
+            'label'        => __( 'Card', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
+        'core/media-text',
+        array(
+            'name'         => 'cards-media-text',
+            'label'        => __( 'Cards', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
+        'core/media-text',
+        array(
+            'name'         => 'border-top-bottom',
+            'label'        => __( 'Border top&bottom', 'smn-admin' ),
             'is_default'   => false,
         )
     );
@@ -78,10 +141,19 @@ if ( function_exists( 'register_block_style' ) ) {
     }
 
     register_block_style(
-        'core/praragrap',
+        'core/paragraph',
         array(
             'name'         => 'cifra-circulo',
             'label'        => __( 'Cifra círculo', 'smn-admin' ),
+            'is_default'   => false,
+        )
+    );
+
+    register_block_style(
+        'core/paragraph',
+        array(
+            'name'         => 'pastilla',
+            'label'        => __( 'Pastilla', 'smn-admin' ),
             'is_default'   => false,
         )
     );
@@ -150,6 +222,14 @@ function remove_is_style_prefix( $block_content, $block ) {
 
     }
     
+    return $block_content;
+}
+
+add_filter( 'render_block', 'modify_media_text_block', 10, 2 );
+function modify_media_text_block( $block_content, $block ) {
+    if ( $block['blockName'] === 'core/media-text' ) {
+        $block_content = str_replace( 'controls', 'autoplay muted', $block_content );
+    }
     return $block_content;
 }
 

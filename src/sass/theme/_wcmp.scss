@@ -1,0 +1,56 @@
+.wcmp-myaccount-template-inner,
+#my-account-menu ~ .woocommerce-MyAccount-content {
+    background-color: $light;
+    border-color: transparent;
+    padding: $spacer;
+    border-radius: $border-radius;
+}
+
+#my-account-menu .logout a, 
+#my-account-menu-tab .logout a {
+    @extend .btn;
+    @extend .btn-outline-danger;
+}
+
+#wcmp-avatar-form {
+    border: $modal-content-border-width solid $modal-content-border-color;
+    border-radius: $modal-content-border-radius;
+
+    h3 {
+
+    }
+
+    input[type=submit] {
+        @extend .btn;
+    }
+
+    input[type=file] {
+        @extend .form-control;
+    }
+
+    p.submit {
+        text-align: center;
+    }
+
+    > i + form {
+        
+        input[type=submit] {
+            @extend .btn-primary;
+        }
+
+    }
+
+    form + form {
+
+        input[type=submit] {
+            @extend .btn-link;
+        }
+
+    }
+
+    i.close-form {
+        border-radius: $border-radius-pill;
+        background: $primary;
+        border-color: $primary;
+    }
+}

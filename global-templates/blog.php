@@ -3,7 +3,10 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-if ( es_blog() ) {
+if ( 
+	// !is_front_page() && 
+	!is_tax( 'product_tag', NOVEDADES_PRODUCT_TAG_ID )
+) {
 	return false;
 }
 
@@ -18,13 +21,26 @@ if ( $q->have_posts() ) { ?>
 
 	<div class="wrapper blog-block" id="wrapper-blog">
 
-		<div class="slick-carousel">
+		<div class="container">
 
-			<?php while ( $q->have_posts() ) { $q->the_post();
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<h2 class="section-title"><?php echo __( 'Últimas noticias', 'smn' ); ?></h2>
+				</div>
+				<div class="col-md-6 text-md-end">
+					<a class="btn btn-outline-dark" href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"><?php echo __( 'Ver todas', 'smn' ); ?></a>
+				</div>
+			</div>
 
-				get_template_part( 'loop-templates/content', 'post' );
+			<div class="slick-carousel slick-padded">
 
-			} ?>
+				<?php while ( $q->have_posts() ) { $q->the_post();
+
+					get_template_part( 'loop-templates/content', 'post' );
+
+				} ?>
+
+			</div>
 
 		</div>
 

@@ -8,29 +8,35 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-$post_type = 'slide';
 
-$args = array(
-	'post_type'			=> $post_type,
-	'posts_per_page'	=> -1,
-	'orderby'			=> 'menu_order',
-	'order'				=> 'ASC',
-);
+if ( have_rows( 'promos_header', 'option' ) ) : ?>
 
-$q = new WP_Query($args);
+	<div class="" id="wrapper-header-promos">
 
-if ( $q->have_posts() ) { ?>
+		<div class="container header-promos-container" id="header-promos" tabindex="-1">
 
-	<div class="slick-slider-default">
+			<?php while ( have_rows( 'promos_header', 'option' ) ) : the_row(); 
+			
+				$promo_title = get_sub_field( 'promo_title' );
+				$promo_text = get_sub_field( 'promo_text' );
+				$promo_term_link = get_sub_field( 'promo_term_link' );
+				$promo_post_link = get_sub_field( 'promo_post_link' );
+				$promo_thumbnail_id = get_sub_field( 'promo_thumbnail_id' );
+				$promo_button_text = get_sub_field( 'promo_button_text' );
+				$promo_tag_text = get_sub_field( 'promo_tag_text' );
+			
+				?>
 
-		<?php while ( $q->have_posts() ) { $q->the_post();
+				<div class="header-promo">
 
-			get_template_part( 'loop-templates/content', $post_type );
+					<?php smn_banner( $promo_title, $promo_text, $promo_term_link, $promo_post_link, $promo_tag_text, $promo_thumbnail_id, $promo_button_text ); ?>
 
-		} ?>
+				</div>
 
-	</div>
+			<?php endwhile; ?>
 
-<?php }
+		</div>
 
-wp_reset_postdata();
+	</div><!-- #wrapper-header-promos -->
+
+<?php endif; ?>

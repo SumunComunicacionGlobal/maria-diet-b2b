@@ -12,6 +12,10 @@ defined( 'ABSPATH' ) || exit;
 
 $bootstrap_version = get_theme_mod( 'understrap_bootstrap_version', 'bootstrap4' );
 $navbar_type       = get_theme_mod( 'understrap_navbar_type', 'collapse' );
+$navbar_class = 'sticky-top';
+if ( is_cart() || is_checkout() ) {
+	$navbar_class = '';
+}
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -27,7 +31,7 @@ $navbar_type       = get_theme_mod( 'understrap_navbar_type', 'collapse' );
 <div class="site" id="page">
 
 	<!-- ******************* The Navbar Area ******************* -->
-	<header id="wrapper-navbar" class="sticky-top">
+	<header id="wrapper-navbar" class="<?php echo $navbar_class; ?>">
 
 		<!-- Top Bar -->
 		<?php get_template_part( 'sidebar-templates/sidebar', 'top-bar' ); ?>
@@ -41,9 +45,7 @@ $navbar_type       = get_theme_mod( 'understrap_navbar_type', 'collapse' );
 	</header><!-- #wrapper-navbar -->
 
 	<?php 
-	if ( is_front_page() ) {
-		get_template_part( 'global-templates/hero' );
-	} elseif ( !is_page() && !is_search() && !is_404() ) {
-		get_template_part( 'global-templates/image-header' ); 
+	if ( !is_front_page() ) {
+		// get_template_part( 'global-templates/image-header' ); 
 	}
 	?>
