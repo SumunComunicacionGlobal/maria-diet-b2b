@@ -35,6 +35,10 @@ $understrap_includes = array(
 // Load WooCommerce functions if WooCommerce is activated.
 if ( class_exists( 'WooCommerce' ) ) {
     $understrap_includes[] = '/smn-woocommerce.php';
+
+	if ( is_professional_website() ) {
+		$understrap_includes[] = '/smn-b2b.php';
+	}
 }
 
 if ( class_exists('ACF')) {
@@ -147,3 +151,16 @@ function understrap_child_customize_controls_js() {
 	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'understrap_child_customize_controls_js' );
+
+function is_professional_website() {
+
+	$home_url = get_home_url();
+
+	if ( 
+		strpos( $home_url, 'profesionales.' ) !== false
+	) {
+		return true;
+	}
+
+	return false;
+}
