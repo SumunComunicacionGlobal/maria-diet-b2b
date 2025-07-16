@@ -35,28 +35,6 @@ function understrap_widgets_init() {
 
 	register_sidebar(
 		array(
-			'name'          => __( 'Área de registro', 'smn-admin' ),
-			'id'            => 'register-area',
-			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</aside>',
-			'before_title'  => '<p class="widget-title">',
-			'after_title'   => '</p>',
-		)
-	);
-
-	register_sidebar(
-		array(
-			'name'          => __( 'Texto explicativo marca personalizada en la ficha de producto', 'smn-admin' ),
-			'id'            => 'marca-personalizada',
-			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</aside>',
-			'before_title'  => '<p class="widget-title">',
-			'after_title'   => '</p>',
-		)
-	);
-
-	register_sidebar(
-		array(
 			'name'          => __( 'Ventajas', 'smn-admin' ),
 			'id'            => 'advantages',
 			'before_widget' => '<aside id="%1$s" class="widget %2$s col-6">',
@@ -90,11 +68,23 @@ function understrap_widgets_init() {
 		)
 	);
 
+	register_sidebar(
+        array(
+            'name'          => __( 'Newsletter', 'smn-admin' ),
+            'id'            => 'newsletter',
+            'description'   => __( 'Aparece en el pie de página', 'smn-admin' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div><!-- .footer-widget -->',
+            'before_title'  => '<p class="widget-title">',
+            'after_title'   => '</p>',
+        )
+    );
+
     register_sidebar(
         array(
-            'name'          => __( 'Pre footer', 'understrap' ),
+            'name'          => __( 'Pre footer', 'smn-admin' ),
             'id'            => 'prefooter',
-            'description'   => __( 'Aparece antes del Pie de Página Completo', 'understrap' ),
+            'description'   => __( 'Aparece antes del Pie de Página Completo', 'smn-admin' ),
             'before_widget' => '<div id="%1$s" class="footer-widget col-md-6 %2$s">',
             'after_widget'  => '</div><!-- .footer-widget -->',
             'before_title'  => '<p class="widget-title">',

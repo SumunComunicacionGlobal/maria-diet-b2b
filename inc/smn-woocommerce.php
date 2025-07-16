@@ -275,13 +275,35 @@ function smn_remove_links_from_terms($links) {
     return $links;
 }
 
+function smn_free_shipping() {
+    $free_shipping_min_amount = get_field('free_shipping_min_amount', 'option');
+    if ( $free_shipping_min_amount ) {
+        global $product;
+        $price = wc_get_price_including_tax( $product );
+        if ( $price >= $free_shipping_min_amount ) {
+            return __( 'Portes gratis', 'smn' );
+        }
+    }
+
+    return false;
+}
+
 // Mostrar campo promocion_anuncio en la página de producto antes del botón de añadir al carrito
 function smn_show_promocion_anuncio() {
 
     global $product;
 
     $badge_class = 'badge bg-light text-dark';
-    $tags = wc_get_product_tag_list( $product->get_id(), '</span> <span class="'. $badge_class .'">', '<span class="'. $badge_class .'">', '</span>' );
+    $tags = '';
+
+    $free_shipping = smn_free_shipping();
+    if ( $free_shipping ) {
+        $tags .= '<span class="badge bg-primary text-light">' . esc_html( $free_shipping ) . '</span>';
+    }
+
+    $tags .= wc_get_product_tag_list( $product->get_id(), '</span> <span class="'. $badge_class .'">', '<span class="'. $badge_class .'">', '</span>' );
+
+
     if ( $tags ) {
         echo '<p class="badges">';
             echo strip_tags($tags, '<span>');
@@ -319,12 +341,41 @@ function smn_product_search_by_sku( $search, $wp_query ) {
 
 
 function smn_get_logged_in_user_actions() {
-    return wpautop( sprintf(
-        __( 'Ve a tu <a href="%s">área de cliente</a> para consultar <a href="%s">tus últimos pedidos</a> o <a href="%s">navega por el catálogo</a>.', 'smn' ),
-        esc_url( wc_get_page_permalink( 'myaccount' ) ),
-        esc_url( wc_get_account_endpoint_url( 'orders' ) ),
-        esc_url( home_url('#productos') )
-    ) );
+
+    $actions = array(
+        [
+            'url' => wc_get_page_permalink('myaccount'),
+            'label' => __('Área de cliente', 'smn'),
+            'icon' => 'icono-filtro.svg'
+        ],
+        [
+            'url' => wc_get_account_endpoint_url('orders'),
+            'label' => __('Últimos pedidos', 'smn'),
+            'icon' => 'icono-envios.svg'
+        ],
+        [
+            'url' => home_url('#productos'),
+            'label' => __('Navegar catálogo', 'smn'),
+            'icon' => 'icono-carrito.svg'
+        ]
+    );
+
+    $r = '';
+    $r .= '<div class="d-flex gap-1 justify-content-center justify-content-lg-end flex-wrap">';
+
+    foreach ($actions as $action) {
+        $r .= '<div class="welcome-action stretch-linked-block d-flex flex-column align-items-center text-center">';
+            $r .= '<img src="' . get_stylesheet_directory_uri() . '/img/' . $action['icon'] . '" alt="' . esc_attr($action['label']) . '" class="welcome-action-icon d-block mb-1" />';
+            $r .= '<a href="' . esc_url($action['url']) . '" class="btn btn-sm btn-outline-primary text-uppercase stretched-link">';
+                $r .= esc_html($action['label']);
+            $r .= '</a>';
+        $r .= '</div>';
+    }
+
+    $r .= '</div>';
+
+    return $r;
+
 }
  
 
@@ -604,11 +655,31 @@ function woocommerce_template_loop_product_title() {
     echo '<p class="mt-2 ' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
+// Remove reviews tab from product page
+add_filter( 'woocommerce_product_tabs', 'smn_remove_reviews_tab', 98 );
+function smn_remove_reviews_tab( $tabs ) {
+    if ( isset( $tabs['reviews'] ) ) {
+        unset( $tabs['reviews'] );
+    }
+    return $tabs;
+}
+
+add_action('woocommerce_single_product_summary', 'smn_show_product_reviews', 50);
+function smn_show_product_reviews() {
+    if ( comments_open() || get_comments_number() ) {
+        echo '<div class="product-reviews">';
+        comments_template();
+        echo '</div>';
+    }
+}
+
+
 add_filter( 'the_content', 'smn_add_product_tabs_after_content', 5 );
 function smn_add_product_tabs_after_content( $content ) {
     if (is_product()) {
 
         $product_tabs = apply_filters( 'woocommerce_product_tabs', array() );
+
         $tabs = '';
         if ( ! empty( $product_tabs ) ) {
 
@@ -654,7 +725,6 @@ function smn_convert_content_to_accordion($content) {
     if (!$sections) {
         return $content;
     }
-
 
     $accordion_content .= '<div class="accordion accordion-flush" id="' . $accordion_id . '">';
     
@@ -912,16 +982,26 @@ function quantity_inputs_for_woocommerce_loop_add_to_cart_link( $html, $product 
 	return $html;
 }
 
-add_action( 'woocommerce_after_shop_loop', function() {
-    if ( is_product_category() ) {
-        $category = get_queried_object();
-        if ( ! empty( $category->description ) ) {
-            echo '<div class="product-category-description container my-4">';
-            echo wpautop( wp_kses_post( $category->description ) );
-            echo '</div>';
-        }
+add_action( 'woocommerce_after_main_content', function() {
+
+    $category = get_queried_object();
+    if ( ! empty( $category->description ) ) {
+        echo '<div class="product-category-description my-4">';
+        echo wpautop( wp_kses_post( $category->description ) );
+        echo '</div>';
     }
+
 } );
 
 remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
 remove_action( 'woocommerce_archive_description', 'woocommerce_product_archive_description', 10 );
+
+add_action( 'woocommerce_after_shop_loop_item', function() {
+    global $product;
+    if ( function_exists('smn_free_shipping') ) {
+        $free_shipping = smn_free_shipping();
+        if ( $free_shipping ) {
+            echo '<span class="badge bg-primary text-light mt-1">' . esc_html( $free_shipping ) . '</span>';
+        }
+    }
+}, 20 );

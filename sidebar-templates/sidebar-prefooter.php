@@ -16,6 +16,18 @@ if ( !is_front_page(  ) ) {
 
 // get_template_part( 'global-templates/footer-promos' );
 
+if ( !is_front_page() && is_active_sidebar( 'newsletter' ) ) : ?>
+
+	<div id="wrapper-newsletter">
+
+		<div class="<?php echo esc_attr( $container ); ?>" id="newsletter-content" tabindex="-1">
+			<?php dynamic_sidebar( 'newsletter' ); ?>
+		</div>
+
+	</div>
+
+<?php endif;
+
 if ( is_active_sidebar( 'prefooter' ) ) : ?>
 
 	<div class="wrapper" id="wrapper-prefooter">

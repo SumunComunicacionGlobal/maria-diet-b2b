@@ -499,5 +499,10 @@ body.understrap-no-sidebar {
     a:not(.btn):not(.wp-block-button__link) {
         text-decoration: underline;
     }
+
+    &-welcome {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
     
 }

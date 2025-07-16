@@ -12,8 +12,9 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 <section id="home-featured" class="bg-light py-2">
 	<div class="<?php echo $container; ?>">
+		<?php get_template_part( 'global-templates/welcome' ); ?>
 		<?php get_template_part( 'global-templates/login' ); ?>
-		<?php if ( is_user_logged_in() ) :
+		<?php if ( is_user_logged_in() || !is_professional_website() ) :
 			get_template_part( 'global-templates/hero-posts' );
 			get_template_part( 'global-templates/subcategories' );
 		endif; ?>
@@ -40,7 +41,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 			</main>
 
 
-			<?php if ( is_user_logged_in() ) : ?>
+			<?php if ( is_user_logged_in() || !is_professional_website() ) : ?>
 
 				<?php get_template_part( 'global-templates/product-categories-tabs' ); ?>
 
@@ -48,7 +49,11 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 			<?php get_template_part( 'global-templates/ventajas' ); ?>
 
-			<?php if ( is_user_logged_in() ) : ?>
+			<?php if ( is_active_sidebar( 'newsletter' ) ) {
+				dynamic_sidebar( 'newsletter' );
+			} ?>
+
+			<?php if ( is_user_logged_in() || !is_professional_website() ) : ?>
 
 				<?php // get_template_part( 'global-templates/ofertas' ); ?>
 

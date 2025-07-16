@@ -17,17 +17,11 @@ defined( 'ABSPATH' ) || exit;
 
 	<div class="wp-block-cover__inner-container">
 
-		<?php
-		the_title( '<p class="h3 content-cover-title">', '</p>' );
-		?>
-
-		<a class="btn btn-outline-light stretched-link" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Ver más', 'understrap' ); ?></a>
-
-		<footer class="entry-footer">
-
-			<?php understrap_entry_footer(); ?>
-
-		</footer><!-- .entry-footer -->
+		<a class="stretched-link has-white-color" href="<?php the_permalink(); ?>">
+			<?php
+			the_title( '<p class="h3 content-cover-title">', '</p>' );
+			?>
+		</a>
 
 	</div>
 

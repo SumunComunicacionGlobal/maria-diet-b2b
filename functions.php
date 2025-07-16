@@ -38,6 +38,8 @@ if ( class_exists( 'WooCommerce' ) ) {
 
 	if ( is_professional_website() ) {
 		$understrap_includes[] = '/smn-b2b.php';
+	} else {
+		$understrap_includes[] = '/smn-b2c.php';
 	}
 }
 
@@ -153,6 +155,8 @@ function understrap_child_customize_controls_js() {
 add_action( 'customize_controls_enqueue_scripts', 'understrap_child_customize_controls_js' );
 
 function is_professional_website() {
+
+	// return true;
 
 	$home_url = get_home_url();
 

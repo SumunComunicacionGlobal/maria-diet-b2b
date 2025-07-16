@@ -5,18 +5,8 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 
-<?php if ( is_user_logged_in(  ) ) : ?>
 
-	<?php if (  !isset($_COOKIE['alert_welcome_shown']) ) : ?>
-
-		<div class="alert alert-light alert-dismissible alert-welcome fade show" role="alert">
-			<?php echo do_shortcode( '[smn_login_form]' ); ?>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-
-	<?php endif; ?>
-
-<?php else : ?>
+<?php if ( is_professional_website() && !is_user_logged_in() ) : ?>
 
 	<div class="alert alert-light fade show" role="alert">
 		<div class="row">
@@ -28,7 +18,6 @@ defined( 'ABSPATH' ) || exit;
 			</div>
 		</div>
 	</div>
-
 
 <?php endif; ?>
 

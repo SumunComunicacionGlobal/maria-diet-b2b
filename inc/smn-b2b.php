@@ -8,6 +8,32 @@ add_action('woocommerce_single_product_summary', 'smn_texto_caja_completa', 32);
 // add_action('woocommerce_single_product_summary', 'smn_texto_marca_personalizada', 45);
 
 
+add_action( 'widgets_init', function() {
+
+	register_sidebar(
+		array(
+			'name'          => __( 'Área de registro', 'smn-admin' ),
+			'id'            => 'register-area',
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
+			'before_title'  => '<p class="widget-title">',
+			'after_title'   => '</p>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'          => __( 'Texto explicativo marca personalizada en la ficha de producto', 'smn-admin' ),
+			'id'            => 'marca-personalizada',
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
+			'before_title'  => '<p class="widget-title">',
+			'after_title'   => '</p>',
+		)
+	);
+
+} );
+
 function smn_show_pvp() {
     $pvp = get_field('pvp');
     if ($pvp) {

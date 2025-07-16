@@ -291,7 +291,6 @@ div.product > .product-tags {
 }
 
 #commentform {
-    margin-top: $spacer;
 
     @include media-breakpoint-up(md) {
         
@@ -356,7 +355,8 @@ div.product > .product-tags {
 .woocommerce-cart #payment, 
 .woocommerce-checkout #payment,
 .woocommerce-account-fields,
-.woocommerce-ResetPassword {
+.woocommerce-ResetPassword,
+.product-reviews {
     background-color: $gray-100;
     // border: $card-border-width solid $card-border-color;
     border: 0;
@@ -474,6 +474,20 @@ address,
     margin-bottom: $spacer*2;
 }
 
+.welcome-action {
+
+    &-icon {
+        height: 2rem;
+        width: 2rem;
+        object-fit: contain;
+    }
+
+    .btn {
+        padding: .25rem .5rem;
+    }
+
+}
+
 /* end WooCommerce account */
 
 
@@ -487,6 +501,10 @@ address,
 
 .xoo-wsc-sc-subt {
     font-size: $font-size-sm;
+
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
 }
 
 .xoo-wsc-body, 
@@ -914,6 +932,33 @@ ul.products {
         font-size: .75em;
         font-weight: $font-weight-normal;
     }
+}
+
+.comment-reply-title,
+.woocommerce-Reviews-title {
+    
+    .title-split {
+        display: inherit;
+        font-size: inherit;
+        color: inherit;
+    }
+
+}
+
+.woocommerce-Reviews-title {
+    font-size: $h6-font-size;
+    margin-top: $spacer;
+}
+
+.woocommerce #reviews #comments ol.commentlist li .comment-text {
+    background-color: $white;
+    margin-left: 4rem;
+}
+
+.woocommerce #reviews #comments ol.commentlist li img.avatar {
+    padding: 0;
+    border-radius: 100px;
+    width: 3rem;
 }
 
 h1 {

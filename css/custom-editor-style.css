@@ -9252,7 +9252,7 @@ table button, .thmaf-adr-box.address-box button, .woocommerce table.my_account_o
 
 .dropdown-menu {
   --bs-dropdown-zindex: 1000;
-  --bs-dropdown-min-width: 10rem;
+  --bs-dropdown-min-width: 16rem;
   --bs-dropdown-padding-x: 0;
   --bs-dropdown-padding-y: 0.5rem;
   --bs-dropdown-spacer: 0.125rem;
@@ -21815,7 +21815,6 @@ body.privacy-policy #content, body.cmplz-document #content {
 
 .stretched-link:hover {
   text-decoration: none;
-  color: #1f1f1f;
 }
 
 .entry-footer {
@@ -21840,11 +21839,40 @@ body.privacy-policy #content, body.cmplz-document #content {
 .header-promos-container {
   height: 480px;
 }
+@media (max-width: 991.98px) {
+  .header-promos-container {
+    height: auto;
+  }
+}
 
 .header-promo .wp-block-cover,
 .header-promos-sidebar .wp-block-cover {
   min-height: 480px;
   align-items: flex-end;
+}
+
+@media (max-width: 991.98px) {
+  #header-promos .header-promo .wp-block-cover {
+    display: block;
+    padding: 0;
+    min-height: unset;
+  }
+  #header-promos .header-promo .wp-block-cover .wp-block-cover__background {
+    opacity: 0 !important;
+  }
+  #header-promos .header-promo .wp-block-cover .wp-block-cover__image-background {
+    position: relative;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    min-height: 220px;
+  }
+  #header-promos .header-promo .wp-block-cover .wp-block-cover__inner-container {
+    padding: 1.5rem;
+    background-color: #836661;
+    max-width: unset !important;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+  }
 }
 
 .header-promo .wp-block-cover {
@@ -22892,6 +22920,10 @@ body.understrap-no-sidebar .alignwide {
 .alert a:not(.btn):not(.wc-block-components-button:not(.is-link)):not(.facetwp-reset):not(.wp-block-button__link), .woocommerce-notices-wrapper .woocommerce-message a:not(.btn):not(.wc-block-components-button:not(.is-link)):not(.facetwp-reset):not(.wp-block-button__link), .woocommerce-info a:not(.btn):not(.wc-block-components-button:not(.is-link)):not(.facetwp-reset):not(.wp-block-button__link) {
   text-decoration: underline;
 }
+.alert-welcome {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
 
 .wp-block-table th, .wp-block-table td {
   padding: 0.8rem;
@@ -23221,7 +23253,7 @@ select.facetwp-dropdown {
 }
 @media (max-width: 600.98px) {
   #main-nav .navbar-header-first .navbar-brand {
-    max-width: 140px;
+    max-width: 128px;
   }
 }
 
@@ -23588,9 +23620,6 @@ div.product > .product-tags {
   color: #6F6C68;
 }
 
-#commentform {
-  margin-top: 1.5rem;
-}
 @media (min-width: 783px) {
   #commentform {
     display: flex;
@@ -23637,7 +23666,8 @@ div.product > .product-tags {
 .woocommerce-cart #payment,
 .woocommerce-checkout #payment,
 .woocommerce-account-fields,
-.woocommerce-ResetPassword {
+.woocommerce-ResetPassword,
+.product-reviews {
   background-color: #f4f0ed;
   border: 0;
   border-radius: 0.375rem;
@@ -23674,7 +23704,10 @@ div.product > .product-tags {
 .woocommerce-account-fields .h3,
 .woocommerce-ResetPassword h3,
 .woocommerce-ResetPassword .is-style-h3,
-.woocommerce-ResetPassword .h3 {
+.woocommerce-ResetPassword .h3,
+.product-reviews h3,
+.product-reviews .is-style-h3,
+.product-reviews .h3 {
   font-size: 1.75rem;
 }
 
@@ -23797,6 +23830,32 @@ address,
   margin-bottom: 3rem;
 }
 
+.welcome-action-icon {
+  height: 2rem;
+  width: 2rem;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+.welcome-action .btn, .welcome-action .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit, .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond .welcome-action input#submit,
+.welcome-action .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) .welcome-action a.button,
+.welcome-action .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) .welcome-action button.button,
+.welcome-action .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) .welcome-action input.button,
+.welcome-action :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond .welcome-action input#submit,
+.welcome-action :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce .welcome-action a.button,
+.welcome-action :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce .welcome-action button.button,
+.welcome-action :where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce .welcome-action input.button, .welcome-action .thmaf-adr-box.address-box button, .thmaf-adr-box.address-box .welcome-action button, .welcome-action #wcmp-avatar-form input[type=submit], #wcmp-avatar-form .welcome-action input[type=submit], .welcome-action #my-account-menu .logout a, #my-account-menu .logout .welcome-action a,
+.welcome-action #my-account-menu-tab .logout a,
+#my-account-menu-tab .logout .welcome-action a, .welcome-action .woocommerce-notices-wrapper .woocommerce-message a.button, .woocommerce-notices-wrapper .woocommerce-message .welcome-action a.button, .welcome-action .woocommerce-info a.button, .woocommerce-info .welcome-action a.button, .welcome-action .facetwp-reset, .welcome-action .wc-block-components-button:not(.is-link) {
+  padding: 0.25rem 0.5rem;
+}
+
 /* end WooCommerce account */
 /* Side cart plugin */
 .xoo-wsc-container,
@@ -23807,6 +23866,11 @@ address,
 
 .xoo-wsc-sc-subt {
   font-size: 0.875rem;
+}
+@media (max-width: 600.98px) {
+  .xoo-wsc-sc-subt {
+    display: none;
+  }
 }
 
 .xoo-wsc-body,
@@ -24120,6 +24184,29 @@ ul.products {
   color: #6F6C68;
   font-size: 0.75em;
   font-weight: 400;
+}
+
+.comment-reply-title .title-split,
+.woocommerce-Reviews-title .title-split {
+  display: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.woocommerce-Reviews-title {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.woocommerce #reviews #comments ol.commentlist li .comment-text {
+  background-color: #ffffff;
+  margin-left: 4rem;
+}
+
+.woocommerce #reviews #comments ol.commentlist li img.avatar {
+  padding: 0;
+  border-radius: 100px;
+  width: 3rem;
 }
 
 h1.product_title, .product_title.is-style-h1, .product_title.h1 {

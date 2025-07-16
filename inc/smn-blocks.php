@@ -143,7 +143,7 @@ if ( function_exists( 'register_block_style' ) ) {
     register_block_style(
         'core/paragraph',
         array(
-            'name'         => 'cifra-circulo',
+            'name'         => 'numeracion',
             'label'        => __( 'Cifra círculo', 'smn-admin' ),
             'is_default'   => false,
         )

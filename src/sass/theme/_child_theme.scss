@@ -88,7 +88,6 @@ body {
 
     &:hover {
         text-decoration: none;
-        color: $body-color;
     }
 }
 
@@ -121,11 +120,45 @@ body {
 
 .header-promos-container {
   height: 480px;
+
+    @include media-breakpoint-down(lg) {
+      height: auto;
+    }
 }
 .header-promo .wp-block-cover,
 .header-promos-sidebar .wp-block-cover {
   min-height: 480px;
   align-items: flex-end;
+}
+
+#header-promos .header-promo .wp-block-cover {
+
+  @include media-breakpoint-down(lg) {
+    display: block;
+    padding: 0;
+    min-height: unset;
+
+    .wp-block-cover__background {
+      opacity: 0 !important;
+    }
+
+    .wp-block-cover__image-background {
+      position: relative;
+      border-top-left-radius: $border-radius-lg;
+      border-top-right-radius: $border-radius-lg;
+      min-height: 220px;
+    }
+
+    .wp-block-cover__inner-container {
+      padding: $spacer;
+      background-color: $primary;
+      max-width: unset !important;
+      border-bottom-left-radius: $border-radius-lg;
+      border-bottom-right-radius: $border-radius-lg;
+    }
+
+  }
+
 }
 
 .header-promo .wp-block-cover {

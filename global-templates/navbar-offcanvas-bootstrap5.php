@@ -27,7 +27,7 @@ $navbar_class = smn_get_navbar_class();
 			<!-- Your site branding in the menu -->
 			<?php get_template_part( 'global-templates/navbar-branding' ); ?>
 
-			<?php if ( is_user_logged_in() ) {
+			<?php if ( !is_professional_website() || ( is_professional_website() && is_user_logged_in() ) ) {
 				echo '<div class="d-none d-lg-block flex-grow-1 mw-500">';
 					get_product_search_form(); 
 				echo '</div>';
@@ -76,7 +76,7 @@ $navbar_class = smn_get_navbar_class();
 
 				<div class="offcanvas-body">
 
-					<?php if ( is_user_logged_in() ) {
+					<?php if ( !is_professional_website() || ( is_professional_website() && is_user_logged_in() ) ) {
 						echo '<div class="d-lg-none mb-3">';
 
 							get_product_search_form(); 
